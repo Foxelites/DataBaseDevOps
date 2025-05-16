@@ -28,47 +28,298 @@
             background: rgba(255, 255, 255, 0.9);
         }
         .content {
-            min-height: 130vh;
-            padding: 40px 20px;
+            min-height: 100vh;
+            padding: 20px;
             position: relative;
             z-index: 1;
             color: white;
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
-        .bottom-bar {
-            width: 100vw;
-            height: 500px;
-            background: linear-gradient(to bottom, transparent, white 20%);
-            z-index: 2;
-            margin: 0;
-            padding: 0;
-            margin-top: auto;
-            margin-bottom: -50px;
-            position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
+        .content h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
         }
-        .action-button {
-            position: absolute;
-            bottom: 480px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 15px 30px;
-            background: white;
+        .main-container {
+            width: 90%;
+            max-width: 1400px;
+            min-height: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: 280px;
+            background: #f5f5f5;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+        }
+        .sidebar-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #fff;
             border: none;
-            border-radius: 25px;
-            font-size: 18px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 16px;
+            color: #333;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
-            z-index: 3;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .action-button:hover {
-            transform: translateX(-50%) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        .sidebar-button:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+        .sidebar-button.active {
+            background: #2196F3;
+            color: white;
+        }
+        .content-area {
+            flex: 1;
+            padding: 30px;
+            color: #333;
+        }
+        .database-content {
+            display: none;
+        }
+        .database-content.active {
+            display: block;
+        }
+        .database-content h2 {
+            color: #2196F3;
+            margin-bottom: 20px;
+        }
+        .database-content p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .info-grid {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .info-grid th {
+            background: #2196F3;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 500;
+        }
+        .info-grid td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+            position: relative;
+        }
+        .info-grid td.editable {
+            cursor: pointer;
+        }
+        .info-grid td.editable:hover {
+            background: #f8f9fa;
+        }
+        .edit-input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #2196F3;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+        }
+        .edit-buttons {
+            position: absolute;
+            right: -80px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+            gap: 5px;
+        }
+        .edit-btn, .save-btn, .cancel-btn {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: white;
+        }
+        .edit-btn {
+            background: #2196F3;
+        }
+        .save-btn {
+            background: #4CAF50;
+        }
+        .cancel-btn {
+            background: #f44336;
+        }
+        .editing .edit-buttons {
+            display: flex;
+        }
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .add-row-btn, .remove-row-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .add-row-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        .remove-row-btn {
+            background: #f44336;
+            color: white;
+        }
+        .add-row-btn:hover, .remove-row-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        .modal-content {
+            position: relative;
+            background: white;
+            width: 500px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .modal-header {
+            margin-bottom: 20px;
+        }
+        .modal-header h3 {
+            margin: 0;
+            color: #2196F3;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .modal-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .delete-btn {
+            background: #f44336;
+            color: white;
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        .edit-btn, .delete-btn, .expand-btn {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: white;
+        }
+        .edit-btn {
+            background: #2196F3;
+        }
+        .delete-btn {
+            background: #f44336;
+        }
+        .expand-btn {
+            background: #4CAF50;
+        }
+        .description-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        .description-content {
+            position: relative;
+            background: white;
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .description-header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .description-header h3 {
+            margin: 0;
+            color: #2196F3;
+        }
+        .description-body {
+            margin-bottom: 20px;
+        }
+        .description-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            resize: vertical;
+        }
+        .description-view {
+            width: 100%;
+            min-height: 200px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #f8f9fa;
+            white-space: pre-wrap;
         }
     </style>
 </head>
@@ -77,17 +328,482 @@
     <nav class="navbar">
         <img src="Images/logo.png" alt="Logo" class="logo">
         <div class="nav-links">
-            <a href="Home.html">Home</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
             <a href="databases.html">Data Bases</a>
+            <a href="logout.html">Log-Out</a>
         </div>
     </nav>
     <div class="content">
-        <h1>Welkom op de Homepagina</h1>
-        <p>Hier kun je meer informatie vinden over deze site en de databases.</p>
-        <button class="action-button">Take me there</button>
-        <div class="bottom-bar"></div>
+        <h1>Welcome to Rijen DevOps's Database</h1>
+        <div class="main-container">
+            <div class="sidebar">
+                <button class="sidebar-button active" data-target="medewerker">Medewerker</button>
+                <button class="sidebar-button" data-target="klant">Klant</button>
+                <button class="sidebar-button" data-target="opdracht">Opdracht</button>
+                <button class="sidebar-button" data-target="uren">Uren Registratie</button>
+                <button class="sidebar-button" data-target="factuur">Factuur</button>
+                <button class="sidebar-button" data-target="rol">Rol</button>
+                <button class="sidebar-button" data-target="order">Order ID</button>
+            </div>
+            <div class="content-area">
+                <div id="medewerker" class="database-content active">
+                    <h2>Medewerker Database</h2>
+                    <p>Beheer alle medewerker gerelateerde informatie in één centrale database.</p>
+                    <table class="info-grid">
+                        <thead>
+                            <tr>
+                                <th>Naam</th>
+                                <th>Functie</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Acties</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="editable">John Doe</td>
+                                <td class="editable">Developer</td>
+                                <td class="editable">john@example.com</td>
+                                <td class="editable">Actief</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="edit-btn" onclick="startRowEdit(this)">Bewerk</button>
+                                        <button class="delete-btn" onclick="deleteRow(this)">Verwijder</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="button-group">
+                        <button class="add-row-btn" onclick="showAddModal('medewerker')">Voeg medewerker toe</button>
+                    </div>
+                </div>
+                <div id="klant" class="database-content">
+                    <h2>Klant Database</h2>
+                    <p>Centrale opslag van alle klantgegevens en relaties.</p>
+                    <table class="info-grid">
+                        <thead>
+                            <tr>
+                                <th>Naam</th>
+                                <th>E-mail/Telefoon nummer</th>
+                                <th>Order ID</th>
+                                <th>Acties</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="editable">Acme Corp</td>
+                                <td class="editable">info@acmecorp.com</td>
+                                <td class="editable">ORD-001</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="edit-btn" onclick="startRowEdit(this)">Bewerk</button>
+                                        <button class="delete-btn" onclick="deleteRow(this)">Verwijder</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="button-group">
+                        <button class="add-row-btn" onclick="showAddModal('klant')">Voeg klant toe</button>
+                    </div>
+                </div>
+                <div id="opdracht" class="database-content">
+                    <h2>Opdracht Database</h2>
+                    <p>Beheer van alle lopende en afgeronde opdrachten.</p>
+                    <table class="info-grid">
+                        <thead>
+                            <tr>
+                                <th>Omschrijving</th>
+                                <th>Deadline</th>
+                                <th>Klant/Order ID</th>
+                                <th>Acties</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="editable">Website ontwikkeling</td>
+                                <td class="editable">2024-04-01</td>
+                                <td class="editable">ORD-001</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="edit-btn" onclick="startRowEdit(this)">Bewerk</button>
+                                        <button class="expand-btn" onclick="showDescription(this)">Details</button>
+                                        <button class="delete-btn" onclick="deleteRow(this)">Verwijder</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="button-group">
+                        <button class="add-row-btn" onclick="showAddModal('opdracht')">Voeg opdracht toe</button>
+                    </div>
+                </div>
+                <div id="uren" class="database-content">
+                    <h2>Uren Registratie Database</h2>
+                    <p>Tracking en beheer van gewerkte uren per medewerker en project.</p>
+                    <p>Beschikbare informatie:</p>
+                    <ul>
+                        <li>Uren per project</li>
+                        <li>Uren per medewerker</li>
+                        <li>Uren per opdracht</li>
+                        <li>Uren rapportages</li>
+                    </ul>
+                </div>
+                <div id="factuur" class="database-content">
+                    <h2>Factuur Database</h2>
+                    <p>Beheer van alle facturen en betalingen.</p>
+                    <p>Beschikbare informatie:</p>
+                    <ul>
+                        <li>Factuur details</li>
+                        <li>Betalingsstatus</li>
+                        <li>Factuur geschiedenis</li>
+                        <li>Financiële rapportages</li>
+                    </ul>
+                </div>
+                <div id="rol" class="database-content">
+                    <h2>Rol Database</h2>
+                    <p>Beheer van gebruikersrollen en toegangsrechten.</p>
+                    <p>Beschikbare informatie:</p>
+                    <ul>
+                        <li>Rol definities</li>
+                        <li>Toegangsrechten</li>
+                        <li>Gebruikersrollen</li>
+                        <li>Beveiligingsinstellingen</li>
+                    </ul>
+                </div>
+                <div id="order" class="database-content">
+                    <h2>Order ID Database</h2>
+                    <p>Tracking en beheer van alle orders en hun unieke identificaties.</p>
+                    <p>Beschikbare informatie:</p>
+                    <ul>
+                        <li>Order nummers</li>
+                        <li>Order status</li>
+                        <li>Order geschiedenis</li>
+                        <li>Order details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Modal for adding new rows -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nieuwe Rij Toevoegen</h3>
+            </div>
+            <div class="form-group">
+                <label for="name">Naam</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="contact">E-mail/Telefoon nummer</label>
+                <input type="text" id="contact" required>
+            </div>
+            <div class="form-group">
+                <label for="orderId">Order ID</label>
+                <input type="text" id="orderId" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Gedetailleerde Beschrijving</label>
+                <textarea id="description" class="description-textarea"></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" onclick="closeModal()">Annuleren</button>
+                <button class="modal-btn save-btn" onclick="saveNewRow()">Opslaan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add the description modal -->
+    <div id="descriptionModal" class="description-modal">
+        <div class="description-content">
+            <div class="description-header">
+                <h3>Opdracht Details</h3>
+            </div>
+            <div class="description-body">
+                <div class="description-view">
+                    <!-- Description content will be dynamically inserted here -->
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" onclick="closeDescriptionModal()">Annuleren</button>
+                <button class="modal-btn save-btn" onclick="saveDescription()">Opslaan</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.sidebar-button');
+            const contents = document.querySelectorAll('.database-content');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and contents
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    contents.forEach(content => content.classList.remove('active'));
+
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    // Show corresponding content
+                    const targetId = this.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+        });
+
+        let currentDatabaseId = '';
+        let currentDescriptionRow = null;
+
+        function showAddModal(databaseId) {
+            currentDatabaseId = databaseId;
+            const modal = document.getElementById('addModal');
+            const modalTitle = modal.querySelector('.modal-header h3');
+            const formGroups = modal.querySelectorAll('.form-group');
+            
+            // Update modal title and form fields based on database
+            if (databaseId === 'klant') {
+                modalTitle.textContent = 'Nieuwe Klant Toevoegen';
+                formGroups[0].querySelector('label').textContent = 'Naam';
+                formGroups[1].querySelector('label').textContent = 'E-mail/Telefoon nummer';
+                formGroups[2].querySelector('label').textContent = 'Order ID';
+                formGroups[3].style.display = 'none'; // Hide description field
+            } else if (databaseId === 'medewerker') {
+                modalTitle.textContent = 'Nieuwe Medewerker Toevoegen';
+                formGroups[0].querySelector('label').textContent = 'Naam';
+                formGroups[1].querySelector('label').textContent = 'E-mail/Telefoon nummer';
+                formGroups[2].querySelector('label').textContent = 'Order ID';
+                formGroups[3].style.display = 'none'; // Hide description field
+            } else if (databaseId === 'opdracht') {
+                modalTitle.textContent = 'Nieuwe Opdracht Toevoegen';
+                formGroups[0].querySelector('label').textContent = 'Omschrijving';
+                formGroups[1].querySelector('label').textContent = 'Deadline';
+                formGroups[2].querySelector('label').textContent = 'Klant/Order ID';
+                formGroups[3].style.display = 'block'; // Show description field
+                formGroups[3].querySelector('label').textContent = 'Gedetailleerde Beschrijving';
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('addModal').style.display = 'none';
+            // Clear form
+            document.getElementById('name').value = '';
+            document.getElementById('contact').value = '';
+            document.getElementById('orderId').value = '';
+            document.getElementById('description').value = '';
+        }
+
+        function startRowEdit(button) {
+            const row = button.closest('tr');
+            const cells = row.querySelectorAll('.editable');
+            
+            cells.forEach(cell => {
+                const currentValue = cell.textContent.trim();
+                cell.dataset.originalValue = currentValue;
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentValue;
+                input.className = 'edit-input';
+                
+                cell.textContent = '';
+                cell.appendChild(input);
+            });
+            
+            // Change edit button to save/cancel
+            const actionButtons = button.parentElement;
+            actionButtons.innerHTML = `
+                <button class="save-btn" onclick="saveRowEdit(this)">Opslaan</button>
+                <button class="cancel-btn" onclick="cancelRowEdit(this)">Annuleren</button>
+                <button class="expand-btn" onclick="showDescription(this)">Details</button>
+            `;
+
+            // Show description edit modal
+            const description = row.dataset.description || '';
+            const modal = document.getElementById('descriptionModal');
+            const textarea = document.getElementById('descriptionText');
+            textarea.value = description;
+            
+            const descriptionBody = modal.querySelector('.description-body');
+            descriptionBody.innerHTML = '';
+            descriptionBody.appendChild(textarea);
+            
+            // Show save button
+            const saveButton = modal.querySelector('.save-btn');
+            saveButton.style.display = 'inline-block';
+            
+            modal.style.display = 'block';
+        }
+
+        function saveRowEdit(button) {
+            const row = button.closest('tr');
+            const cells = row.querySelectorAll('.editable');
+            let hasEmptyField = false;
+            
+            cells.forEach(cell => {
+                const input = cell.querySelector('.edit-input');
+                const newValue = input.value.trim();
+                
+                if (!newValue) {
+                    hasEmptyField = true;
+                    return;
+                }
+                
+                cell.textContent = newValue;
+            });
+            
+            if (hasEmptyField) {
+                alert('Vul alle velden in');
+                return;
+            }
+            
+            // Restore action buttons
+            const actionButtons = button.parentElement;
+            actionButtons.innerHTML = `
+                <button class="edit-btn" onclick="startRowEdit(this)">Bewerk</button>
+                <button class="expand-btn" onclick="showDescription(this)">Details</button>
+                <button class="delete-btn" onclick="deleteRow(this)">Verwijder</button>
+            `;
+        }
+
+        function cancelRowEdit(button) {
+            const row = button.closest('tr');
+            const cells = row.querySelectorAll('.editable');
+            
+            cells.forEach(cell => {
+                const originalValue = cell.dataset.originalValue;
+                cell.textContent = originalValue;
+            });
+            
+            // Restore action buttons
+            const actionButtons = button.parentElement;
+            actionButtons.innerHTML = `
+                <button class="edit-btn" onclick="startRowEdit(this)">Bewerk</button>
+                <button class="expand-btn" onclick="showDescription(this)">Details</button>
+                <button class="delete-btn" onclick="deleteRow(this)">Verwijder</button>
+            `;
+        }
+
+        function showDescription(button) {
+            const row = button.closest('tr');
+            currentDescriptionRow = row;
+            const description = row.dataset.description || '';
+            
+            const modal = document.getElementById('descriptionModal');
+            const textarea = document.getElementById('descriptionText');
+            
+            // Replace textarea with read-only view
+            const descriptionView = document.createElement('div');
+            descriptionView.className = 'description-view';
+            descriptionView.textContent = description || 'Geen beschrijving beschikbaar';
+            
+            const descriptionBody = modal.querySelector('.description-body');
+            descriptionBody.innerHTML = '';
+            descriptionBody.appendChild(descriptionView);
+            
+            // Hide save button, only show close button
+            const saveButton = modal.querySelector('.save-btn');
+            saveButton.style.display = 'none';
+            
+            modal.style.display = 'block';
+        }
+
+        function closeDescriptionModal() {
+            document.getElementById('descriptionModal').style.display = 'none';
+            currentDescriptionRow = null;
+        }
+
+        function saveDescription() {
+            if (currentDescriptionRow) {
+                const description = document.getElementById('descriptionText').value;
+                currentDescriptionRow.dataset.description = description;
+                closeDescriptionModal();
+            }
+        }
+
+        function saveNewRow() {
+            const name = document.getElementById('name').value;
+            const contact = document.getElementById('contact').value;
+            const orderId = document.getElementById('orderId').value;
+            const description = document.getElementById('description').value;
+
+            if (!name || !contact || !orderId) {
+                alert('Vul alle velden in');
+                return;
+            }
+
+            const table = document.querySelector(`#${currentDatabaseId} .info-grid tbody`);
+            const newRow = document.createElement('tr');
+            
+            if (currentDatabaseId === 'opdracht') {
+                newRow.dataset.description = description;
+                newRow.innerHTML = `
+                    <td class="editable">${name}</td>
+                    <td class="editable">${contact}</td>
+                    <td class="editable">${orderId}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="edit-btn" onclick="startRowEdit(this)">Bewerk</button>
+                            <button class="expand-btn" onclick="showDescription(this)">Details</button>
+                            <button class="delete-btn" onclick="deleteRow(this)">Verwijder</button>
+                        </div>
+                    </td>
+                `;
+            } else if (currentDatabaseId === 'klant') {
+                newRow.innerHTML = `
+                    <td class="editable">${name}</td>
+                    <td class="editable">${contact}</td>
+                    <td class="editable">${orderId}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="edit-btn" onclick="startRowEdit(this)">Bewerk</button>
+                            <button class="delete-btn" onclick="deleteRow(this)">Verwijder</button>
+                        </div>
+                    </td>
+                `;
+            } else if (currentDatabaseId === 'medewerker') {
+                newRow.innerHTML = `
+                    <td class="editable">${name}</td>
+                    <td class="editable">${contact}</td>
+                    <td class="editable">${orderId}</td>
+                    <td class="editable">Actief</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="edit-btn" onclick="startRowEdit(this)">Bewerk</button>
+                            <button class="delete-btn" onclick="deleteRow(this)">Verwijder</button>
+                        </div>
+                    </td>
+                `;
+            }
+            
+            table.appendChild(newRow);
+            closeModal();
+        }
+
+        function deleteRow(button) {
+            if (confirm('Weet je zeker dat je deze rij wilt verwijderen?')) {
+                const row = button.parentElement.parentElement;
+                row.remove();
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('addModal');
+            const descriptionModal = document.getElementById('descriptionModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+            if (event.target == descriptionModal) {
+                closeDescriptionModal();
+            }
+        }
+    </script>
 </body>
 </html> 
